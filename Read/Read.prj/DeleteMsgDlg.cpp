@@ -1,7 +1,7 @@
 // DeleteMsgDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "pch.h"
 #include "DeleteMsgDlg.h"
 #include "Resource.h"
 #include "afxdialogex.h"

@@ -17,7 +17,7 @@ enum DataSource {NotePadSrc, StoreSrc, FontSrc};
 class ReadDoc : public CDoc {
 
 PathDlgDsc  pathDlgDsc;
-String      databasePath;
+String      dbPath;
 
 DataSource  dataSource;
 
@@ -32,8 +32,7 @@ public:
 
   virtual BOOL    OnNewDocument();
 
-          void    loadDBfile(TCchar* path);
-          String& getFilePath();
+            void initialLoad();
 
        DataSource dataSrc() {return dataSource;}
           void    display(DataSource ds);
@@ -49,6 +48,8 @@ public:
 #endif
 
 private:
+
+  void    loadDBfile(TCchar* path);
 
   void    editEntry(Person* per, Book* book);
   void    updateEntries(PerTypPos perTypPos, ABookDlg& dlg, Book*& book);
@@ -102,26 +103,4 @@ public:
   afx_msg void OnOptions();
   afx_msg void onEditCopy();
   };
-
-
-
-
-#ifdef Examples
-  afx_msg void OnTest();
-  afx_msg void displayDataStore();
-  afx_msg void myButton();
-
-  afx_msg void OnComboBoxChng();
-
-  afx_msg void OnTBEditBox();
-  afx_msg void myButton1();
-  afx_msg void onOption11();
-  afx_msg void onOption12();
-  afx_msg void onOption13();
-  afx_msg void onOption21();
-  afx_msg void onOption22();
-  afx_msg void onOption23();
-  afx_msg void OnTestEditBoxes();
-#endif
-//  afx_msg void OnFileOpen();
 

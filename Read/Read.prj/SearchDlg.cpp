@@ -1,7 +1,7 @@
 // SearchDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "pch.h"
 #include "SearchDlg.h"
 #include "IniFile.h"
 #include "resource.h"

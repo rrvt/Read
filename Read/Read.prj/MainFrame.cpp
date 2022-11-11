@@ -1,7 +1,7 @@
 // MainFrm.cpp : implementation of the MainFrame class
 
 
-#include "stdafx.h"
+#include "pch.h"
 #include "MainFrame.h"
 #include "AboutDlg.h"
 #include "TBBtnCtx.h"
@@ -103,32 +103,15 @@ afx_msg LRESULT MainFrame::OnResetToolBar(WPARAM wParam, LPARAM lParam) {setupTo
 
 void MainFrame::setupToolBar() {
   toolBar.installMenu(ID_AuthorMenu, IDR_AuthorMenu, _T("Person Sub Lists"));
-
-#ifdef Examples
-CRect winRect;   GetWindowRect(&winRect);   toolBar.initialize(winRect);
-
-  toolBar.installBtn(     ID_Btn1, _T("Load Combo"));
-  toolBar.installMenu(    ID_Menu2, IDR_PopupMenu2, _T("Menu 2"));
-  toolBar.installComboBox(ID_CBox);
-  toolBar.installEditBox( ID_EditBox, 20);
-
-#endif
   }
 
 
 // MainFrame diagnostics
 
 #ifdef _DEBUG
-void MainFrame::AssertValid() const
-{
-  CFrameWndEx::AssertValid();
-}
+void MainFrame::AssertValid() const {CFrameWndEx::AssertValid();}
 
-void MainFrame::Dump(CDumpContext& dc) const
-{
-  CFrameWndEx::Dump(dc);
-}
+void MainFrame::Dump(CDumpContext& dc) const {CFrameWndEx::Dump(dc);}
 #endif //_DEBUG
 
 
-// MainFrame message handlers

@@ -1,7 +1,7 @@
 // ABookDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "pch.h"
 #include "ABookDlg.h"
 #include "Resource.h"
 

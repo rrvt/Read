@@ -1,7 +1,7 @@
 // Tool Bar to be used with Button and ComboBox
 
 
-#include "stdafx.h"
+#include "pch.h"
 #include "ToolBar.h"
 #include "TBButton.h"
 #include "TBComboBox.h"
@@ -290,13 +290,4 @@ CRect  rect;                                          // button rectangle relati
 
   return false;
   }
-
-
-
-#if 0
-  linRect       = rect;
-  linRect.top   = linRect.bottom = linRect.top + 24;
-  linRect.left  = winRect.left  + 24;
-  linRect.right = winRect.right - 24;
-#endif
 

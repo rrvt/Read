@@ -1,7 +1,7 @@
 // ReadView.cpp : implementation of the ReadView class
 
 
-#include "stdafx.h"
+#include "pch.h"
 #include "ReadView.h"
 #include "Read.h"
 #include "ReadDoc.h"
@@ -18,14 +18,6 @@ IMPLEMENT_DYNCREATE(ReadView, CScrView)
 BEGIN_MESSAGE_MAP(ReadView, CScrView)
   ON_WM_LBUTTONDOWN()
   ON_WM_LBUTTONDBLCLK()
-
-#if 0
-  ON_WM_CONTEXTMENU()
-  ON_COMMAND(ID_Pup0, &onCopy)
-  ON_COMMAND(ID_Pup1, &onPup1)
-  ON_COMMAND(ID_Pup2, &onPup2)
-#endif
-
 END_MESSAGE_MAP()
 
 
@@ -34,14 +26,6 @@ ReadView::ReadView() noexcept :
 ResourceData res;
 String       pn;
   if (res.getProductName(pn)) prtNote.setTitle(pn);
-
-#if 0
-  sub.LoadMenu(ID_PopupMenu);
-  menu.CreatePopupMenu();
-  menu.AppendMenu(MF_POPUP, (UINT_PTR) sub.GetSafeHmenu(), _T(""));        //
-
-  sub.Detach();
-#endif
   }
 
 
@@ -134,35 +118,6 @@ void ReadView::OnLButtonDblClk(UINT nFlags, CPoint point)
   {clipLine.set(point);   RedrawWindow();   clipLine.load();   CScrView::OnLButtonDblClk(nFlags, point);}
 
 
-#if 0
-void ReadView::OnContextMenu(CWnd* /*pWnd*/, CPoint point) {
-CRect  rect;
-CMenu* popup;
-CWnd*  pWndPopupOwner = this;
-
-  if (point.x == -1 && point.y == -1)
-            {GetClientRect(rect);  ClientToScreen(rect);  point = rect.TopLeft();  point.Offset(5, 5);}
-
-  popup = menu.GetSubMenu(0);   if (!popup) return;
-
-  while (pWndPopupOwner->GetStyle() & WS_CHILD) pWndPopupOwner = pWndPopupOwner->GetParent();
-
-  popup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
-  }
-#endif
-
-
-#if 0
-
-void ReadView::onCopy() {clipLine.load();  invalidate();}
-
-
-void ReadView::onPup1() {  }
-
-
-void ReadView::onPup2() {  }
-#endif
-
 // ReadView diagnostics
 
 #ifdef _DEBUG
@@ -175,28 +130,4 @@ ReadDoc* ReadView::GetDocument() const
   {ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(ReadDoc))); return (ReadDoc*)m_pDocument;}
 
 #endif //_DEBUG
-
-
-
-
-#if 1
-#else
-  sub.CreatePopupMenu();
-
-  sub.AppendMenu(MF_STRING, ID_Pup0, _T("Copy Selection\tCtrl+C"));
-  sub.AppendMenu(MF_STRING, ID_Pup1, _T("Popup 1\tCtrl+A"));
-  sub.AppendMenu(MF_STRING, ID_Pup2, _T("Popup 2\tCtrl+B"));
-#endif
-#ifdef Examples
-      case StoreSrc   : prtStore.print(*this); break;
-#endif
-#ifdef Examples
-      case StoreSrc   : dspStore.display(*this); break;
-#endif
-#ifdef Examples
-    case StoreSrc   : prtStore.footer(dev, pageNo); break;
-#endif
-                                    #ifdef Examples
-                                      dspStore(dMgr.getNotePad()), prtStore(pMgr.getNotePad()),
-                                    #endif
 

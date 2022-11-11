@@ -2,13 +2,8 @@
 // Microsoft Visual C++ generated include file.
 // Used by Read.rc
 
-
-// Define Examples if examples must execute in new application
-// Also define/undefine in stdafx.h
-
 #pragma once
 
-//#define Examples
 
 #define IDR_MAINFRAME                   100
 #define IDR_ToolBarImages               101
@@ -89,36 +84,5 @@
 #define _APS_NEXT_CONTROL_VALUE         204
 #define _APS_NEXT_SYMED_VALUE           300
 #endif
-#endif
-
-
-
-
-#ifdef Examples
-#define IDR_PopupMenu2                  103
-
-#define ID_Test                         405
-#define ID_SelDataStr                   406
-#define ID_Btn1                         407
-#define ID_CBox                         409
-#define ID_EditBox                      411
-
-#define ID_AuthorMenu                   408
-#define ID_Option11                     412
-#define ID_Option12                     413
-#define ID_Option13                     414
-#define ID_Menu2                        415
-#define ID_Option21                     416
-#define ID_Option22                     417
-#define ID_Option23                     418
-#endif
-
-//#define ID_File_New                     400
-//#define ID_File_Open                    401
-#if 0
-#define ID_PopupMenu                    420
-#define ID_Pup0                         421
-#define ID_Pup1                         422
-#define ID_Pup2                         423
 #endif
 

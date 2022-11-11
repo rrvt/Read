@@ -1,7 +1,7 @@
 // Read.cpp : Defines the class behaviors for the application.
 
 
-#include "stdafx.h"
+#include "pch.h"
 #include "Read.h"
 #include "AboutDlg.h"
 #include "ExtraResource.h"
@@ -73,7 +73,7 @@ BOOL Read::InitInstance() {
 
   options.load();    view()->setOrientation(options.orient);
 
-  doc()->loadDBfile(doc()->getFilePath());
+  doc()->initialLoad();
 
   m_pMainWnd->ShowWindow(SW_SHOW);   m_pMainWnd->UpdateWindow();   return TRUE;
   }

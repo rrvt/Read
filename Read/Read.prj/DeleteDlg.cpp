@@ -1,7 +1,7 @@
 // DeleteDlg dialog
 
 
-#include "stdafx.h"
+#include "pch.h"
 #include "DeleteDlg.h"
 #include "Books.h"
 #include "Resource.h"

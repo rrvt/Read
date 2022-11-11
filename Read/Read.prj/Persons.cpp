@@ -1,7 +1,7 @@
 // List of Persons
 
 
-#include "stdafx.h"
+#include "pch.h"
 #include "Persons.h"
 #include "ABookIO.h"
 #include "Books.h"
@@ -150,24 +150,6 @@ int i;
     if (p.bookKeys.isEmpty()) {rcds.del(i); i--;}
     }
   }
-
-
-#if 0
-void Persons::examinePersons() {
-int i;
-
-  notePad.close();
-
-  for (i = 0; i < noRcds(); i++) {
-    Person& p = rcds[i];
-
-    if (p.lName == _T("Bosch")) {
-      BookKeys& bks = p.bookKeys;
-      int x = 1;
-      }
-    }
-  }
-#endif
 
 
 void Persons::load(Archive& ar) {

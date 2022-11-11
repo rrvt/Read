@@ -34,6 +34,13 @@ The "HTML Help Workshop" (google it) must be installed on the PC.
 
 Execute the msi file to install the app.
 
+## Updates
+
+### Update 11/10/22
+
+Update the toolbar background.  Update the help file icons.  Replace stdafx.h with pch.h/framework.h.
+And other changes.
+
 ## Authors
 
 Robert R. Van Tuyl

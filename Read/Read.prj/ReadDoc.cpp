@@ -1,7 +1,7 @@
  // ReadDoc.cpp : implementation of the ReadDoc class
 
 
-#include "stdafx.h"
+#include "pch.h"
 #include "ReadDoc.h"
 #include "Books.h"
 #include "ClipLine.h"
@@ -72,40 +72,38 @@ ReadDoc::ReadDoc() noexcept : dataSource(NotePadSrc), dirty(false) {
   pathDlgDsc(_T("Book Database"), _T("ABookDB.bdb"), _T("bdb"), _T("*.bdb"));
   }
 
+
 ReadDoc::~ReadDoc() { }
 
+
+void ReadDoc::initialLoad() {
+
+  iniFile.read(FileSection, ABkDBKey, path);
+
+  if (path.isEmpty()) {setOpenPath(pathDlgDsc);   iniFile.write(FileSection, ABkDBKey, path);}
+
+  loadDBfile(path);
+  }
 
 
 
 void ReadDoc::onOpenDatabase() {
-String newPath;
-
-  if (getPathDlg(pathDlgDsc, newPath)) {
-
-    if (newPath != databasePath) {
-
-      databasePath = newPath;    loadDBfile(databasePath);
-      }
-    }
+  if (setOpenPath(pathDlgDsc)) {    loadDBfile(path);}
   }
 
 
 void ReadDoc::loadDBfile(TCchar* path) {
 String s;
 
-  notePad.clear();   persons.clear();   books.clear();
+  dataSource = StoreSrc;   notePad.clear();   persons.clear();   books.clear();
 
-  dataSource = StoreSrc;   OnOpenDocument(path);    dirty = false;
+  OnOpenDocument(path);   dbPath = path;   dirty = false;
 
-  updateBookKeys();
+  updateBookKeys();   persons.sort();
 
-  persons.sort();
+  s = _T("Read -- A List of Books Read at ") + dbPath;
 
-  s = _T("Read -- A List of Books Read at ") + databasePath;
-
-  theApp.setTitle(s);
-
-  onDisplayAll();
+  theApp.setTitle(s);    onDisplayAll();
   }
 
 
@@ -422,7 +420,6 @@ int    i;
 BOOL ReadDoc::OnNewDocument() {return CDocument::OnNewDocument();}
 
 
-
 void ReadDoc::onEditCopy() {clipLine.load();}
 
 
@@ -449,22 +446,9 @@ void ReadDoc::OnFileSave() {
 
   if (!dirty) return;
 
-  persons.sort();   pathDlgDsc.name = databasePath;
+  persons.sort();   pathDlgDsc.name = dbPath;
 
   if (setSaveAsPath(pathDlgDsc)) {dataSource = StoreSrc; OnSaveDocument(path);}
-  }
-
-
-String& ReadDoc::getFilePath() {
-
-  iniFile.read(FileSection, ABkDBKey, databasePath);
-
-  if (databasePath.isEmpty()) {
-    getPathDlg(pathDlgDsc, databasePath);
-
-    iniFile.write(FileSection, ABkDBKey, databasePath);
-    }
-  return databasePath;
   }
 
 

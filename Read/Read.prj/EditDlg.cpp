@@ -1,7 +1,7 @@
 // EditDlg.cpp : implementation file
 
 
-#include "stdafx.h"
+#include "pch.h"
 #include "EditDlg.h"
 #include "Books.h"
 #include "IniFile.h"

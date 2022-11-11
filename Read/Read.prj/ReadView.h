@@ -4,9 +4,6 @@
 #pragma once
 #include "CScrView.h"
 #include "NotePadRpt.h"
-#ifdef Examples
-#include "StoreRpt.h"
-#endif
 
 
 class ReadDoc;
@@ -16,13 +13,6 @@ class ReadView : public CScrView {
 
 NotePadRpt dspNote;
 NotePadRpt prtNote;
-#ifdef Examples
-StoreRpt   dspStore;
-StoreRpt   prtStore;
-
-CMenu      menu;
-CMenu      sub;
-#endif
 
 protected: // create from serialization only
 
@@ -59,17 +49,9 @@ public:
   afx_msg void OnSetFocus(CWnd* pOldWnd);
   afx_msg void OnLButtonDown(  UINT nFlags, CPoint point);
   afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
-
-#if 0
-  afx_msg void OnContextMenu(  CWnd* ,      CPoint point);
-  afx_msg void onCopy();
-  afx_msg void onPup1();
-  afx_msg void onPup2();
-#endif
   };
 
 #ifndef _DEBUG  // debug version in ReadView.cpp
-inline ReadDoc* ReadView::GetDocument() const
-   { return reinterpret_cast<ReadDoc*>(m_pDocument); }
+inline ReadDoc* ReadView::GetDocument() const {return reinterpret_cast<ReadDoc*>(m_pDocument);}
 #endif
 

@@ -2,7 +2,7 @@
 // Copyright Software Design & Engineering, Robert R. Van Tuyl, 2013.  All rights reserved.
 
 
-#include "stdafx.h"
+#include "pch.h"
 #include "Device.h"
 #include "ClipLine.h"
 #include "EditBoxes.h"
@@ -377,13 +377,4 @@ String err = _T("Unable to output: '"); err += stg; err += _T("'");
 
   messageBox(err);
   }
-
-
-
-#if 1
-#else
-    CString cs;  cs = frag;
-    try {if (!dc->TextOut(hz.currentPos(), vert.pos(), cs)) {outError(cs); return;}}
-    catch (...)                                             {outError(cs); return;}
-#endif
 

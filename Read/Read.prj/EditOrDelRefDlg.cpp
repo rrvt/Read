@@ -1,7 +1,7 @@
 // EditOrDelRefDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "pch.h"
 #include "EditOrDelRefDlg.h"
 #include "resource.h"
 #include "afxdialogex.h"
