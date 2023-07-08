@@ -9,16 +9,15 @@
 #include "DeleteMsgDlg.h"
 #include "EditDlg.h"
 #include "EditOrDelRefDlg.h"
-#include "ExtraResource.h"
 #include "filename.h"
 #include "GetPathDlg.h"
 #include "IniFile.h"
 #include "MessageBox.h"
 #include "NotePad.h"
-#include "Options.h"
 #include "Resource.h"
 #include "Read.h"
 #include "ReadView.h"
+#include "ResourceExtra.h"
 #include "SearchDlg.h"
 #include "ToolBar.h"
 
@@ -60,7 +59,6 @@ BEGIN_MESSAGE_MAP(ReadDoc, CDoc)
   ON_COMMAND(ID_FixIt,         &onFixIt)
 
   ON_COMMAND(ID_File_Save,     &OnFileSave)
-  ON_COMMAND(ID_Options,       &OnOptions)
   ON_COMMAND(ID_EDIT_COPY,     &onEditCopy)
 
 END_MESSAGE_MAP()
@@ -421,9 +419,6 @@ BOOL ReadDoc::OnNewDocument() {return CDocument::OnNewDocument();}
 
 
 void ReadDoc::onEditCopy() {clipLine.load();}
-
-
-void ReadDoc::OnOptions() {options(view());  view()->setOrientation(options.orient);}
 
 
 void ReadDoc::display(DataSource ds) {dataSource = ds; invalidate();}

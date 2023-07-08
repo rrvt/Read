@@ -4,13 +4,12 @@
 #include "pch.h"
 #include "Read.h"
 #include "AboutDlg.h"
-#include "ExtraResource.h"
 #include "IniFile.h"
 #include "MainFrame.h"
 #include "NotePad.h"
-#include "Options.h"
 #include "ReadDoc.h"
 #include "ReadView.h"
+#include "ResourceExtra.h"
 
 
 Read    theApp;                           // The one and only Read object
@@ -21,7 +20,6 @@ IniFile iniFile;
 
 BEGIN_MESSAGE_MAP(Read, CWinAppEx)
 
-  ON_COMMAND(ID_FILE_PRINT_SETUP, &OnFilePrintSetup)
   ON_COMMAND(ID_Help,             &OnHelp)
   ON_COMMAND(ID_App_About,        &OnAppAbout)
 END_MESSAGE_MAP()
@@ -71,25 +69,9 @@ BOOL Read::InitInstance() {
 
   view()->setFont(_T("Arial"), 12.0);
 
-  options.load();    view()->setOrientation(options.orient);
-
   doc()->initialLoad();
 
   m_pMainWnd->ShowWindow(SW_SHOW);   m_pMainWnd->UpdateWindow();   return TRUE;
-  }
-
-
-
-void Read::OnFilePrintSetup() {
-PrtrOrient orient;
-
-  view()->setPrntrOrient(getDevMode());
-
-    CWinApp::OnFilePrintSetup();
-
-  orient = view()->getPrntrOrient(getDevMode());
-
-  options.setOrient(orient);   view()->setOrientation(options.orient);
   }
 
 

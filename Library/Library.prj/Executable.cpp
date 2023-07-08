@@ -6,8 +6,6 @@
 #include "MessageBox.h"
 #include <processenv.h>
 
-//#include "FileIO.h"
-
 
 static BOOL CALLBACK EnumWindowsProcMy(HWND hwnd, LPARAM targetId);
 

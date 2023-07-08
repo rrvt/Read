@@ -171,7 +171,7 @@ ElIter* XmlStoreIter::push(XmlElement* element) {
 NewAlloc(ElIter);
 
   if (++stkX < noElements(data))
-    data[stkX] = AllocNodeI(*element);
+    data[stkX] = AllocNodeI1(*element);
 
   return data[stkX];
   }

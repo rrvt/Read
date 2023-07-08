@@ -100,7 +100,6 @@ public:
 
   afx_msg void onFixIt();
   afx_msg void OnFileSave();
-  afx_msg void OnOptions();
   afx_msg void onEditCopy();
   };
 

@@ -23,8 +23,8 @@ public:
 
   void read(String&   s);
   void read(Tchar&   ch) {if (!ar.read(ch))             msg(_T("read Tchar: "));}
-  void read(int&      v) {if (!ar.readBlk(&v, sizeof(v)))  msg(_T("read int: "));}
-  void read(Date&     d) {if (!ar.readBlk(&d, sizeof(d)))  msg(_T("read Date: "));}
+  void read(int&      v) {if (!ar.read(v))              msg(_T("read int: "));}
+  void read(Date&     d) {int x = sizeof(d);  if (!ar.readBlk(&d, x))  msg(_T("read Date: "));}
   void read(Byte&     v) {if (!ar.read(v))              msg(_T("read Byte: "));}
 
 private:

@@ -36,6 +36,10 @@ Execute the msi file to install the app.
 
 ## Updates
 
+### Update 7/7/23
+
+Library Update and resulting app changes.
+
 ### Update 11/10/22
 
 Update the toolbar background.  Update the help file icons.  Replace stdafx.h with pch.h/framework.h.

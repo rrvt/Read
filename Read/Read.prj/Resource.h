@@ -56,8 +56,10 @@
 #define ID_DisplayAll                   404
 #define ID_Delete                       406
 #define ID_FixIt                        407
-#define ID_File_Save                    408
-#define ID_Help                         409
+#define ID_Options                      408
+#define ID_File_Save                    409
+#define ID_App_About                    410
+#define ID_Help                         411
 
 #define ID_AuthorMenu                   420
 #define ID_AuthorAB                     421
