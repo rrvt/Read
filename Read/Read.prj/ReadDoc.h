@@ -5,8 +5,8 @@
 #include "ABookDlg.h"
 #include "CDoc.h"
 #include "MainFrame.h"
-#include "match.h"
 #include "Persons.h"
+#include "RegExpr.h"
 
 class Book;
 

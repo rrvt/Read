@@ -36,6 +36,15 @@ Execute the msi file to install the app.
 
 ## Updates
 
+### Update 2/18/24
+
+Reorganized the Library so that it compiles once into Debug and Release directories under the Library
+directory.
+
+### Update 1/8/24
+
+Library and other changes.
+
 ### Update 7/7/23
 
 Library Update and resulting app changes.
