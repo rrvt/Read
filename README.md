@@ -36,6 +36,10 @@ Execute the msi file to install the app.
 
 ## Updates
 
+### Update 6/14/24
+
+Reorganize toolbar and update WinPos.
+
 ### Update 2/18/24
 
 Reorganized the Library so that it compiles once into Debug and Release directories under the Library

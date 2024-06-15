@@ -151,6 +151,7 @@
     <ClInclude Include="EditOrDelRefDlg.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainFrame.h" />
+    <ClInclude Include="MyToolBar.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Persons.h" />
     <ClInclude Include="Read.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="EditDlg.cpp" />
     <ClCompile Include="EditOrDelRefDlg.cpp" />
     <ClCompile Include="MainFrame.cpp" />
+    <ClCompile Include="MyToolBar.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Persons.cpp" />
     <ClCompile Include="Read.cpp" />

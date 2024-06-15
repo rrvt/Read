@@ -4,7 +4,6 @@
 #include "pch.h"
 #include "MainFrame.h"
 #include "AboutDlg.h"
-#include "TBBtnCtx.h"
 
 
 
@@ -33,7 +32,7 @@ static UINT indicators[] = {
 
 MainFrame::MainFrame() noexcept : isInitialized(false) { }
 
-MainFrame::~MainFrame() { }
+MainFrame::~MainFrame() {winPos.~WinPos();}
 
 
 BOOL MainFrame::PreCreateWindow(CREATESTRUCT& cs) {
@@ -102,7 +101,7 @@ afx_msg LRESULT MainFrame::OnResetToolBar(WPARAM wParam, LPARAM lParam) {setupTo
 
 
 void MainFrame::setupToolBar() {
-  toolBar.installMenu(ID_AuthorMenu, IDR_AuthorMenu, _T("Person Sub Lists"));
+  toolBar.addMenu(ID_AuthorMenu, IDR_AuthorMenu, _T("Person Sub Lists"));
   }
 
 

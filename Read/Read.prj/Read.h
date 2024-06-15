@@ -33,9 +33,9 @@ public:
 
 extern Read theApp;
 
-inline void             invalidate() {theApp.invalidate();}
-inline ReadDoc*  doc()        {return theApp.doc();}
-inline ReadView* view()       {return theApp.view();}
-inline MainFrame*       mainFrm()    {return theApp.mainFrm();}
-inline ToolBar&         getToolBar() {return mainFrm()->getToolBar();}
+inline void       invalidate() {theApp.invalidate();}
+inline ReadDoc*   doc()        {return theApp.doc();}
+inline ReadView*  view()       {return theApp.view();}
+inline MainFrame* mainFrm()    {return theApp.mainFrm();}
+inline MyToolBar& getToolBar() {return mainFrm()->getToolBar();}
 

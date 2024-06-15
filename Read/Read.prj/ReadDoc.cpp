@@ -19,7 +19,7 @@
 #include "ReadView.h"
 #include "ResourceExtra.h"
 #include "SearchDlg.h"
-#include "ToolBar.h"
+#include "MyToolBar.h"
 
 
 
