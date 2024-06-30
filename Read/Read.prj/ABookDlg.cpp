@@ -10,8 +10,10 @@
 
 IMPLEMENT_DYNAMIC(ABookDlg, CDialogEx)
 
-ABookDlg::ABookDlg(CWnd* pParent) : CDialogEx(IDD_Abook, pParent), title(_T("")), author(_T("")),
-            pubDate(_T("")), authorID(_T("")), author2ID(_T("")), protagID(_T("")), protag2ID(_T("")) { }
+ABookDlg::ABookDlg(CWnd* pParent) : CDialogEx(IDD_Abook, pParent),
+                                    title(_T("")),    author(_T("")),    pubDate(_T("")),
+                                    authorID(_T("")), author2ID(_T("")), protagID(_T("")),
+                                    protag2ID(_T("")) { }
 
 ABookDlg::~ABookDlg() { }
 
@@ -19,27 +21,27 @@ ABookDlg::~ABookDlg() { }
 void ABookDlg::DoDataExchange(CDataExchange* pDX) {
   CDialogEx::DoDataExchange(pDX);
 
-  DDX_Text(   pDX, IDC_Title,      title);
+  DDX_Text(   pDX, IDC_Title,        title);
 
-  DDX_Text(   pDX, IDC_AuthorID,   authorID);
-  DDX_Text(   pDX, IDC_FirstName,  author);
-  DDX_Text(   pDX, IDC_LastName,   authorLast);
+  DDX_Text(   pDX, IDC_AuthorID,     authorID);
+  DDX_Text(   pDX, IDC_FirstName,    author);
+  DDX_Text(   pDX, IDC_LastName,     authorLast);
 
-  DDX_Text(   pDX, IDC_Aurthor2ID, author2ID);
-  DDX_Text(   pDX, IDC_FirstName2, author2);
-  DDX_Text(   pDX, IDC_LastName2,  author2Last);
+  DDX_Text(   pDX, IDC_Aurthor2ID,   author2ID);
+  DDX_Text(   pDX, IDC_FirstName2,   author2);
+  DDX_Text(   pDX, IDC_LastName2,    author2Last);
 
-  DDX_Text(   pDX, IDC_ProtagID,   protagID);
-  DDX_Text(   pDX, IDC_PrtgFirstNm,      protag);
-  DDX_Text(   pDX, IDC_PrtgLastNm,      protagLast);
+  DDX_Text(   pDX, IDC_ProtagID,     protagID);
+  DDX_Text(   pDX, IDC_PrtgFirstNm,  protag);
+  DDX_Text(   pDX, IDC_PrtgLastNm,   protagLast);
 
-  DDX_Text(   pDX, IDC_Protag2ID,  protag2ID);
-  DDX_Text(   pDX, IDC_Prtg2FirstNm,      protag2);
-  DDX_Text(   pDX, IDC_Prtg2LastNm,      protag2Last);
+  DDX_Text(   pDX, IDC_Protag2ID,    protag2ID);
+  DDX_Text(   pDX, IDC_Prtg2FirstNm,  protag2);
+  DDX_Text(   pDX, IDC_Prtg2LastNm,  protag2Last);
 
-  DDX_Text(   pDX, IDC_Location,      location);
-  DDX_Text(   pDX, IDC_PubDate,     pubDate);
-  DDX_Text(   pDX, IDC_Comment,     comment);
+  DDX_Text(   pDX, IDC_Location,     location);
+  DDX_Text(   pDX, IDC_PubDate,      pubDate);
+  DDX_Text(   pDX, IDC_Comment,      comment);
 
   DDX_Control(pDX, IDC_AuthorID,     authorIDctrl);
   DDX_Control(pDX, IDC_FirstName,    authFNctrl);

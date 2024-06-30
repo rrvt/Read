@@ -13,7 +13,7 @@ IMPLEMENT_DYNAMIC(DeleteDlg, CDialogEx)
 
 
 DeleteDlg::DeleteDlg(CWnd* pParent ) : CDialogEx(IDD_Delete, pParent),
-                                tgtID(_T("")), targetTyp(Author), target(_T("")), person(0), book(0) {}
+                           tgtID(_T("")), targetTyp(Author), target(_T("")), person(0), book(0) {}
 
 
 DeleteDlg::~DeleteDlg() { }
@@ -162,5 +162,5 @@ String   name;
 
 
 void DeleteDlg::load(CComboBox& cbx, int id, TCchar* s)
-                                      {String t;   t.format(_T("%4i  %s"), id, s);    cbx.AddString(t);}
+                                {String t;   t.format(_T("%4i  %s"), id, s);    cbx.AddString(t);}
 

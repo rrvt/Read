@@ -12,7 +12,8 @@ static int NoOfButtons        = 12;
 
 #ifdef MyButtonDefs
 
-MyToolBar::MyToolBar() : menu(ID_AuthorMenu) {toolBarDim.initialize(NoOfButtonControls, NoOfButtons);}
+MyToolBar::MyToolBar() : menu(ID_AuthorMenu)
+                                          {toolBarDim.initialize(NoOfButtonControls, NoOfButtons);}
 #else
 
 MyToolBar::MyToolBar() {toolBarDim.initialize(NoOfButtonControls, NoOfButtons);}

@@ -11,20 +11,14 @@
 
 IMPLEMENT_DYNAMIC(EditOrDelRefDlg, CDialogEx)
 
-EditOrDelRefDlg::EditOrDelRefDlg(CWnd* pParent) : CDialogEx(IDD_EditOrDelRef, pParent), person(_T(""))
-{  }
+EditOrDelRefDlg::EditOrDelRefDlg(CWnd* pParent) : CDialogEx(IDD_EditOrDelRef, pParent),
+                                                                               person(_T("")) {  }
 
 
 EditOrDelRefDlg::~EditOrDelRefDlg() { }
 
 
-BOOL EditOrDelRefDlg::OnInitDialog() {
-  CDialogEx::OnInitDialog();
-
-
-
-  return TRUE;
-  }
+BOOL EditOrDelRefDlg::OnInitDialog() {CDialogEx::OnInitDialog();   return TRUE;}
 
 
 void EditOrDelRefDlg::DoDataExchange(CDataExchange* pDX) {
@@ -36,7 +30,7 @@ void EditOrDelRefDlg::DoDataExchange(CDataExchange* pDX) {
 
 BEGIN_MESSAGE_MAP(EditOrDelRefDlg, CDialogEx)
   ON_BN_CLICKED(IDC_EditPerson, &EditOrDelRefDlg::OnClickedEditperson)
-  ON_BN_CLICKED(IDC_DeleteRef, &EditOrDelRefDlg::OnClickedDeleteref)
+  ON_BN_CLICKED(IDC_DeleteRef,  &EditOrDelRefDlg::OnClickedDeleteref)
 END_MESSAGE_MAP()
 
 

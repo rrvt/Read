@@ -204,7 +204,7 @@ void Book::removePersonRefs() {
 
 
 void Book::clear() {protagID = 0; protag2ID = 0; authorID = 0; author2ID = 0;
-                                                   location.clear();  title.clear();   comment.clear();}
+                                             location.clear();  title.clear();   comment.clear();}
 
 
 void Book::copy(Book& b) {rcdCopy(b);

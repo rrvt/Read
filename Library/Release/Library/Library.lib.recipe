@@ -3,5 +3,9 @@
   <ProjectOutputs />
   <ContentFiles />
   <SatelliteDlls />
-  <NonRecipeFileRefs />
+  <NonRecipeFileRefs>
+    <NonRecipeFileRef>
+      <FullPath>D:\Sources\RACEScontacts\RACEScontacts.hlp\RACEScontacts.hlp.vcxproj</FullPath>
+    </NonRecipeFileRef>
+  </NonRecipeFileRefs>
 </Project>

@@ -18,7 +18,7 @@ static TCchar* TgtKey  = _T("Target");
 IMPLEMENT_DYNAMIC(SearchDlg, CDialogEx)
 
 SearchDlg::SearchDlg(CWnd* pParent) :
-                                    CDialogEx(IDD_Search, pParent), srchType(Author), target(_T("")) { }
+                               CDialogEx(IDD_Search, pParent), srchType(Author), target(_T("")) { }
 
 SearchDlg::~SearchDlg() { }
 

@@ -22,8 +22,6 @@
 #include "MyToolBar.h"
 
 
-
-
 static TCchar* FileSection = _T("A Book DB");
 static TCchar* ABkDBKey    = _T("Path");
 
@@ -213,7 +211,8 @@ SearchDlg dlg;
   }
 
 
-void ReadDoc::onEdit() {EditDlg dlg;   if (dlg.DoModal() == IDOK) {editEntry(dlg.person, dlg.book);}}
+void ReadDoc::onEdit()
+                     {EditDlg dlg;   if (dlg.DoModal() == IDOK) {editEntry(dlg.person, dlg.book);}}
 
 
 void ReadDoc::editEntry(Person* per, Book* book) {
@@ -410,7 +409,7 @@ int    i;
   t = s.substr(0, 1);
 
   for (i = 0; i < noElements(prefixPat); i++)
-                                            if (prefixPat[i].match(t)) {re = &prefixPat[i]; return true;}
+                                      if (prefixPat[i].match(t)) {re = &prefixPat[i]; return true;}
   return false;
   }
 
@@ -527,7 +526,7 @@ void ReadDoc::readDB_2(Archive& ar) {
 // ReadDoc diagnostics
 
 #ifdef _DEBUG
-void ReadDoc::AssertValid() const {CDocument::AssertValid();}
+void ReadDoc::AssertValid() const          {CDocument::AssertValid();}
 void ReadDoc::Dump(CDumpContext& dc) const {CDocument::Dump(dc);}
 #endif //_DEBUG
 

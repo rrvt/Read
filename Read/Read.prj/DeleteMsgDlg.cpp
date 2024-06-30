@@ -27,4 +27,3 @@ BEGIN_MESSAGE_MAP(DeleteMsgDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// DeleteMsgDlg message handlers

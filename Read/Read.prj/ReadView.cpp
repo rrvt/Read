@@ -64,8 +64,8 @@ void ReadView::onDisplayOutput() {dspNote.display(*this);}
 
 
 // The footer is injected into the printed output, so the output goes directly to the device.
-// The output streaming functions are very similar to NotePad's streaming functions so it should not
-// be a great hardship to construct a footer.
+// The output streaming functions are very similar to NotePad's streaming functions so it should
+// not be a great hardship to construct a footer.
 
 void ReadView::printFooter(DevBase& dev, int pageNo) {prtNote.prtFooter(dev, pageNo);}
 
@@ -94,23 +94,23 @@ void ReadView::OnSetFocus(CWnd* pOldWnd) {
 
 
 void ReadView::OnLButtonDown(UINT nFlags, CPoint point)
-                        {clipLine.set(point);   invalidate();   CScrView::OnLButtonDown(nFlags, point);}
+                   {clipLine.set(point);   invalidate();   CScrView::OnLButtonDown(nFlags, point);}
 
 
-void ReadView::OnLButtonDblClk(UINT nFlags, CPoint point)
-  {clipLine.set(point);   RedrawWindow();   clipLine.load();   CScrView::OnLButtonDblClk(nFlags, point);}
+void ReadView::OnLButtonDblClk(UINT nFlags, CPoint point) {
+  clipLine.set(point);   RedrawWindow();   clipLine.load();
+
+  CScrView::OnLButtonDblClk(nFlags, point);
+  }
 
 
 // ReadView diagnostics
 
 #ifdef _DEBUG
-
-void ReadView::AssertValid() const {CScrollView::AssertValid();}
-
+void ReadView::AssertValid() const          {CScrollView::AssertValid();}
 void ReadView::Dump(CDumpContext& dc) const {CScrollView::Dump(dc);}
-                                             // non-debug version is inline
+                                                                     // non-debug version is inline
 ReadDoc* ReadView::GetDocument() const
-  {ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(ReadDoc))); return (ReadDoc*)m_pDocument;}
-
+            {ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(ReadDoc))); return (ReadDoc*)m_pDocument;}
 #endif //_DEBUG
 

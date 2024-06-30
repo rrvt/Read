@@ -36,6 +36,10 @@ Execute the msi file to install the app.
 
 ## Updates
 
+### Update 6/29/24
+
+Add MIT License to installation.
+
 ### Update 6/14/24
 
 Reorganize toolbar and update WinPos.

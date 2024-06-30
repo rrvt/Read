@@ -20,8 +20,10 @@ static TCchar* IDkey    = _T("ID");
 IMPLEMENT_DYNAMIC(EditDlg, CDialogEx)
 
 
-EditDlg::EditDlg(CWnd* pParent) : CDialogEx(IDD_Edit, pParent), targetTyp(Author),
-            targetID(_T("")), target(_T("")), other(_T("")), otherState(NilOther), person(0), book(0) { }
+EditDlg::EditDlg(CWnd* pParent) : CDialogEx(IDD_Edit, pParent),
+                                  targetTyp(Author), targetID(_T("")),     target(_T("")),
+                                  other(_T("")),     otherState(NilOther), person(0),
+                                  book(0) { }
 
 
 EditDlg::~EditDlg() { }
@@ -32,7 +34,7 @@ BOOL EditDlg::OnInitDialog() {
   targetTyp = (State) iniFile.readInt(Section, StateKey, 0);
   iniFile.readString(Section, IDkey,  targetID);
 
-  CDialogEx::OnInitDialog();   load(targetID, false);   return TRUE;                                         //
+  CDialogEx::OnInitDialog();   load(targetID, false);   return TRUE;
   }
 
 
@@ -195,7 +197,7 @@ String   name;
 
 
 void EditDlg::load(CComboBox& cbx, int id, TCchar* s)
-                                      {String t;   t.format(_T("%4i  %s"), id, s);    cbx.AddString(t);}
+                                {String t;   t.format(_T("%4i  %s"), id, s);    cbx.AddString(t);}
 
 
 void EditDlg::OnOK() {

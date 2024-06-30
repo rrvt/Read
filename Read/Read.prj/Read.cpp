@@ -54,8 +54,6 @@ BOOL Read::InitInstance() {
 
   AddDocTemplate(pDocTemplate);
 
-//  EnableShellOpen(); RegisterShellFileTypes(TRUE);       // Enable DDE Execute open
-
   // Parse command line for standard shell commands, DDE, file open
 
   CCommandLineInfo cmdInfo;   ParseCommandLine(cmdInfo);

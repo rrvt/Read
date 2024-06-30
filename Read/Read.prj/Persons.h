@@ -85,7 +85,7 @@ private:
 
   BookKey* datum(int i) {return 0 <= i && i < nData() ? &rcds[i] : 0;}       // or data[i].p
 
-  int   nData()      {return rcds.end();}                       // returns number of data items in array
+  int   nData()      {return rcds.end();}                 // returns number of data items in array
 
   friend typename BksIter;
   };
@@ -186,7 +186,7 @@ private:
 
   Person* datum(int i) {return 0 <= i && i < nData() ? &rcds[i] : 0;}       // or data[i].p
 
-  int   nData()      {return rcds.end();}                       // returns number of data items in array
+  int   nData()      {return rcds.end();}                 // returns number of data items in array
 
   friend typename PersIter;
   };
