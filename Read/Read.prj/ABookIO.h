@@ -16,16 +16,16 @@ public:
  ~ABookIO() {}
 
   void write( String& s);
-  void write( Tchar  ch) {if (!ar.write(ch))            msg(_T("write Tchar: "));}
-  void write( int     v) {if (!ar.write(&v, sizeof(v))) msg(_T("write int: "));}
-  void write( Date&   d) {if (!ar.write(&d, sizeof(d))) msg(_T("write Date: "));}
-  void write( Byte    v) {if (!ar.write(v))             msg(_T("write Byte: "));}
+  void write( Tchar  ch) {if (!ar.write(ch))             msg(_T("write Tchar: "));}
+  void write( int     v) {if (!ar.wrtBin(&v, sizeof(v))) msg(_T("write int: "));}
+  void write( Date&   d) {if (!ar.wrtBin(&d, sizeof(d))) msg(_T("write Date: "));}
+  void write( Byte    v) {if (!ar.wrtBin(v))             msg(_T("write Byte: "));}
 
   void read(String&   s);
   void read(Tchar&   ch) {if (!ar.read(ch))             msg(_T("read Tchar: "));}
-  void read(int&      v) {if (!ar.read(v))              msg(_T("read int: "));}
-  void read(Date&     d) {int x = sizeof(d);  if (!ar.readBlk(&d, x))  msg(_T("read Date: "));}
-  void read(Byte&     v) {if (!ar.read(v))              msg(_T("read Byte: "));}
+  void read(int&      v) {if (!ar.readBin(v))           msg(_T("read int: "));}
+  void read(Date&     d) {int x = sizeof(d);  if (!ar.readBin(&d, x))  msg(_T("read Date: "));}
+  void read(Byte&     v) {if (!ar.readBin(v))           msg(_T("read Byte: "));}
 
 private:
 

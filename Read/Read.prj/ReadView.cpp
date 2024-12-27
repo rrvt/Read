@@ -8,7 +8,7 @@
 #include "ClipLine.h"
 #include "OptionsDlg.h"
 #include "Resource.h"
-#include "Resources.h"
+#include "ResourceData.h"
 #include "RptOrientDlgOne.h"
 
 
@@ -67,7 +67,7 @@ void ReadView::onDisplayOutput() {dspNote.display(*this);}
 // The output streaming functions are very similar to NotePad's streaming functions so it should
 // not be a great hardship to construct a footer.
 
-void ReadView::printFooter(DevBase& dev, int pageNo) {prtNote.prtFooter(dev, pageNo);}
+void ReadView::printFooter(DevStream& dev, int pageNo) {prtNote.prtFooter(dev, pageNo);}
 
 
 

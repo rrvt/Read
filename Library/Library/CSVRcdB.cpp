@@ -2,9 +2,9 @@
 
 
 #include "pch.h"
-#include "CSVLex.h"
-#include "CSVOut.h"
 #include "CSVRcdB.h"
+//#include "CSVLex.h"
+#include "CSVOut.h"
 
 
 // load csv data from file
@@ -47,7 +47,11 @@ String  line;
 int CSVRcdB::display(NotePad& np) {
 String* s;
 
-  for (getI = 0, s = get(); s; getI++, s = get()) {if (getI > 0) np << _T(',');   np << *s;}
+  for (getI = 0, s = get(); s; getI++, s = get()) {
+    if (getI > 0) np << _T(',');
+
+    if (!s->isEmpty()) np << *s;
+    }
 
   np << nCrlf;  return 1;
   }

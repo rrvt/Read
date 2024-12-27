@@ -97,7 +97,7 @@ int n;
 int i;
 int x;
 
-  clear();   ar.read(n);    if (!n) return;
+  clear();   ar.readBin(n);    if (!n) return;
 
   for (i = 0; i < n; i++) {
     x = rcds[noRcds()].load(ar);
@@ -111,7 +111,7 @@ int x;
 void Books::store(Archive& ar) {
 int     i;
 
-  ar.write(noRcds());
+  ar.wrtBin(noRcds());
 
   for (i = 0; i < noRcds(); i++) {
     rcds[i].store(ar);

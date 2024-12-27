@@ -452,7 +452,7 @@ void ReadDoc::serialize(Archive& ar) {
 
   if (ar.isStoring())
     switch(dataSource) {
-      case NotePadSrc : notePad.archive(ar); return;
+      case NotePadSrc : ar << notePad; return;
       case StoreSrc   : writeDB(ar);         return;
       default         :                      return;
       }
@@ -476,7 +476,7 @@ int    rcdTyp;
   for (
     rcdTyp = AuthorRcdTyp; rcdTyp < NoRcdTypes; rcdTyp++) {
 
-    ar.write(rcdTyp);
+    ar.wrtBin(rcdTyp);
 
     switch(rcdTyp) {
       case AuthorRcdTyp : persons.store(ar); break;
@@ -509,7 +509,7 @@ int rTyp = 0;
 
   for (rcdTyp = AuthorRcdTyp; rcdTyp < NoRcdTypes; rcdTyp++) {
 
-    ar.read(rTyp);
+    ar.readBin(rTyp);
 
     switch(rTyp) {
       case AuthorRcdTyp : persons.load(ar); break;
