@@ -11,7 +11,6 @@
 #include "Read.h"
 
 
-Persons persons;
 
 
 void Persons::clear() {

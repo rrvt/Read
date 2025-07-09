@@ -10,9 +10,6 @@
 #include "RegExpr.h"
 
 
-Books books;
-
-
 void Books::clear() {
 int i;
 

@@ -7,7 +7,7 @@ Read.chm : *.htm Read.hhp Read.hhc App.css
 Clean.cln    :
   @echo "Cleaning"
   cd $(MAKEDIR)
-  del /F Read.chm
+  if exist Read.chm del /F Read.chm
 
 
 Release/Read.chm : Read.chm
@@ -16,7 +16,7 @@ Release/Read.chm : Read.chm
 
 Release/Clean.cln    : Clean.cln
   cd $(MAKEDIR)\..\Release
-  del Read.chm
+  if exist Read.chm del /F Read.chm
   cd $(MAKEDIR)
 
 
@@ -26,7 +26,7 @@ Debug/Read.chm : Read.chm
 
 Debug/Clean.cln    : Clean.cln
   cd $(MAKEDIR)\..\Debug
-  del Read.chm
+  if exist Read.chm del /F Read.chm
   cd $(MAKEDIR)
 
 

@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "EditDlg.h"
 #include "Books.h"
-#include "IniFile.h"
+#include "IniFileEx.h"
 #include "Persons.h"
 #include "resource.h"
 #include "afxdialogex.h"

@@ -4,7 +4,8 @@
 #include "pch.h"
 #include "Read.h"
 #include "AboutDlg.h"
-#include "IniFile.h"
+#include "Books.h"
+#include "IniFileEx.h"
 #include "MainFrame.h"
 #include "NotePad.h"
 #include "ReadDoc.h"
@@ -12,8 +13,10 @@
 #include "ResourceExtra.h"
 
 
-Read    theApp;                           // The one and only Read object
-IniFile iniFile;
+Read      theApp;                         // The one and only Read object
+IniFileEx iniFile(theApp);
+Books     books;
+Persons   persons;
 
 
 // Read
@@ -31,7 +34,7 @@ BOOL Read::InitInstance() {
 
   CWinAppEx::InitInstance();
 
-  iniFile.setAppDataPath(m_pszHelpFilePath, *this);
+  iniFile.setAppDataPath(m_pszHelpFilePath);
 
   notePad.clear();
 
@@ -73,14 +76,7 @@ BOOL Read::InitInstance() {
   }
 
 
-int Read::ExitInstance() {
-
-#ifdef DebugMemoryLeaks
-  _CrtDumpMemoryLeaks();
-#endif
-
-  return CApp::ExitInstance();
-  }
+int Read::ExitInstance() {notePad.~NotePad();   return CApp::ExitInstance();}
 
 
 void Read::OnHelp() {
