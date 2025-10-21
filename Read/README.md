@@ -36,6 +36,10 @@ Execute the msi file to install the app.
 
 ## Updates
 
+### Update 10/21/25
+
+Factored library into three parts, Library, Dialog, DocView.
+
 ### Update 7/8/25
 
 Update Database objects to suppress memory leak reporting.  Factored IniFile into three classes.

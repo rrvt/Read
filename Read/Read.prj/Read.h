@@ -33,7 +33,7 @@ public:
 
 extern Read theApp;
 
-inline void       invalidate() {theApp.invalidate();}
+
 inline ReadDoc*   doc()        {return theApp.doc();}
 inline ReadView*  view()       {return theApp.view();}
 inline MainFrame* mainFrm()    {return theApp.mainFrm();}

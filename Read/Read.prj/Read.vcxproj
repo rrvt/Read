@@ -200,6 +200,11 @@
   <ItemGroup>
     <Image Include="res\Read.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Library\DocView\DocView.vcxproj">
+      <Project>{d0fdd57b-5315-4e31-b0c9-fcfb7a0285f6}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

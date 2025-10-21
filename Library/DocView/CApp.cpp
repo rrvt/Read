@@ -1,10 +1,11 @@
 // Subclass of CWinAppEx
 
 
-#include "pch.h"
+#include "LibGlobals.h"
 #include "CApp.h"
 #include "Devices.h"
 #include "MessageBox.h"
+#include "NotePad.h"
 #include "ResourceData.h"
 
 
@@ -34,7 +35,8 @@ CApp::~CApp() {
   }
 
 
-int CApp::ExitInstance() {devices.~Devices();   return CWinAppEx::ExitInstance();}
+int CApp::ExitInstance()
+                    {devices.~Devices();   notePad.~NotePad();   return CWinAppEx::ExitInstance();}
 
 
 void CApp::setAppName(TCchar* appName)   {if (getMainFrame()) getMainFrame()->setAppName(appName);}
