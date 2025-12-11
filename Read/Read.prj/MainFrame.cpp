@@ -102,7 +102,8 @@ afx_msg LRESULT MainFrame::OnResetToolBar(WPARAM wParam, LPARAM lParam)
 
 
 void MainFrame::setupToolBar() {
-  toolBar.addMenu(ID_AuthorMenu, IDR_AuthorMenu, _T("Person Sub Lists"));
+  toolBar.addMenu(ID_AuthorMenu,  IDR_AuthorMenu,  _T("Person Sub Lists"));
+  toolBar.addMenu(ID_DisplayMenu, IDR_DisplayMenu, _T("Display Options"));
   }
 
 

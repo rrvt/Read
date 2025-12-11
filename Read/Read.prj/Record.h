@@ -4,19 +4,21 @@
 #pragma once
 
 
-enum RecordTyp {AuthorRcdTyp = 101, BookRcdTyp, NoRcdTypes};
-typedef int RecordID;
+enum RecordTyp  {AuthorRcdTyp = 101, BookRcdTyp, NoRcdTypes};
+
+enum DspOptions {NilDsp, TitleDsp, DateDsp, AuthDsp, PersonDsp, AllPerDsp, DebugDsp};
 
 
 class Record {
 public:
 
-RecordID id;
+String key;
+int    id{};
 
-  Record() : id(0) {}
+  Record() {}
  ~Record() {id = 0;}
 
-  void    add(int& nextIndex) {id = nextIndex++;}
-  void    rcdCopy(Record& r) {id = r.id;}
+  void    set(int& nextIndex) {id = nextIndex++;}
+  void    copy(Record& r) {id = r.id;}
   };
 

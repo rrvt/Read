@@ -2,46 +2,50 @@
 
 
 #pragma once
-#include "ABookDlg.h"
+#include "BookDlg.h"
 #include "CDoc.h"
 #include "MainFrame.h"
-#include "Persons.h"
+#include "PathDlgDsc.h"
 #include "RegExpr.h"
 
 class Book;
+class Persons;
 
 
 enum DataSource {NotePadSrc, StoreSrc, FontSrc};
 
 
+
 class ReadDoc : public CDoc {
 
-PathDlgDsc  pathDlgDsc;
-String      dbPath;
+PathDlgDsc  pathDlgDsc{_T("Book Database"), _T("BookDB.bdb"), _T("bdb"), _T("*.bdb")};
+String      dbPath{};
+int         dbVer{};
 
-DataSource  dataSource;
+DataSource  dataSource{NotePadSrc};
 
-bool        dirty;
+DspOptions  dspOption{NilDsp};              // Current Display option
+String      dspPrefix;                      // Current Display Prefix for Person Display
 
-protected: // create from serialization only
+bool        dirty{false};
+
+protected:                                  // create from serialization only
 
   ReadDoc() noexcept;
   DECLARE_DYNCREATE(ReadDoc)
 
 public:
+      virtual ~ReadDoc();
 
-  virtual BOOL    OnNewDocument();
+          void initialLoad();
 
-            void initialLoad();
+    DataSource dataSrc() {return dataSource;}
+       void    display(DataSource ds = NotePadSrc);
 
-       DataSource dataSrc() {return dataSource;}
-          void    display(DataSource ds);
+       void    saveData();
 
   virtual void serialize(Archive& ar);
 
-// Implementation
-public:
-  virtual ~ReadDoc();
 #ifdef _DEBUG
   virtual void AssertValid() const;
   virtual void Dump(CDumpContext& dc) const;
@@ -49,26 +53,30 @@ public:
 
 private:
 
+  bool    getDBpath();
   void    loadDBfile(TCchar* path);
+  bool    verifyRefs();                             // LoadDB
 
-  void    editEntry(Person* per, Book* book);
-  void    updateEntries(PerTypPos perTypPos, ABookDlg& dlg, Book*& book);
-
-  void    updateBookKeys();
-  void    delPerson(Person* person);
-  void    delBook(Book* book);
-  void    display(TCchar* prefix);
   bool    findFilePrefix(String& s, RegExpr*& re);
 
   void    writeDB( Archive& ar);
   void    readDB(  Archive& ar);
-  void    readDB_1(Archive& ar);
-  void    readDB_2(Archive& ar);
 
-  void testLine(int n);
-  void wholePage();
+  void    dspDirty();
 
-// Generated message map functions
+  void    testLine(int n);
+  void    wholePage();
+
+  void    displayData();
+  void    displayCur();
+  void    displayBk(DspOptions opt);
+  void    display(TCchar* prefix);
+  void    displayDB();
+
+  bool    dspModify(TCchar* prefix, Book*   book);
+  bool    dspModify(TCchar* prefix, Person* person);
+
+  void    setVersion(int ver);
 
 protected:
 
@@ -76,11 +84,16 @@ protected:
 
 public:
 
+  afx_msg void onCreateDB();
   afx_msg void onOpenDatabase();
   afx_msg void onAddRecord();
   afx_msg void onSearch();
-  afx_msg void onEdit();
-  afx_msg void onDelete();
+  afx_msg void onModifyRcd();
+
+  afx_msg void onSortTitle();
+  afx_msg void onSortDate();
+  afx_msg void onSortAuthor();
+  afx_msg void onDebugDsp();
 
   afx_msg void onDisplayAll();
   afx_msg void onDisplay_AB();
@@ -97,9 +110,18 @@ public:
   afx_msg void onDisplay_WX();
   afx_msg void onDisplay_YZ();
 
-
   afx_msg void onFixIt();
   afx_msg void OnFileSave();
   afx_msg void onEditCopy();
   };
+
+
+
+/////-------------------
+
+//void    editEntry(Person* per, Book* book);
+//  void    delPerson(Person* person);
+//  void    delBook(Book* book);
+//  afx_msg void onDelete();
+//void    updateEntries(PerTypPos perTypPos, BookDlg& dlg, Book*& book);
 

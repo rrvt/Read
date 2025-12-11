@@ -25,6 +25,7 @@ BEGIN_MESSAGE_MAP(Read, CWinAppEx)
 
   ON_COMMAND(ID_Help,             &OnHelp)
   ON_COMMAND(ID_App_About,        &OnAppAbout)
+  ON_COMMAND(ID_APP_EXIT,         &onAppExit)
 END_MESSAGE_MAP()
 
 
@@ -78,6 +79,13 @@ BOOL Read::InitInstance() {
 
 int Read::ExitInstance() {notePad.~NotePad();   return CApp::ExitInstance();}
 
+
+void Read::onAppExit() {
+
+  doc()->saveData();   notePad.clear();   books.clear();   persons.clear();
+
+  CWinApp::OnAppExit();
+  }
 
 void Read::OnHelp() {
 String topic = m_pszHelpFilePath; topic += _T(">Introduction");

@@ -12,13 +12,20 @@ static int NoOfButtons        = 12;
 
 #ifdef MyButtonDefs
 
-MyToolBar::MyToolBar() : menu(ID_AuthorMenu)
+MyToolBar::MyToolBar() : menu(ID_AuthorMenu), menu2(ID_DisplayMenu)
                                           {toolBarDim.initialize(NoOfButtonControls, NoOfButtons);}
 #else
 
 MyToolBar::MyToolBar() {toolBarDim.initialize(NoOfButtonControls, NoOfButtons);}
 
 #endif
+
+
+bool MyToolBar::addMenu(uint id, int idr, TCchar* caption) {
+  if (id == menu.getId())   return add(menu,  id, idr, caption);
+  if (id == menu2.getId())  return add(menu2, id, idr, caption);
+  return false;
+  }
 
 
 bool MyToolBar::addButton( uint id, TCchar* caption) {
@@ -46,18 +53,6 @@ CString MyToolBar::getText(uint id) {
 
 #ifdef DocViewTB
 
-bool MyToolBar::addMenu(uint id, int idr, TCchar* caption) {
-#ifdef ButtonDefs
-int menuID  = menu.getId();
-int menu1ID = menu1.getId();
-int saveID  = saveMenu.getId();
-
-  if (id == menuID)  return add(menu,     id, idr, caption);
-  if (id == menu1ID) return add(menu1,    id, idr, caption);
-  if (id == saveID)  return add(saveMenu, id, idr, caption);
-#endif
-  return false;
-  }
 
 
 bool MyToolBar::addMenu(uint id, int idr, int index) {

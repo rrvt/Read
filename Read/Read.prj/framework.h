@@ -56,4 +56,4 @@ typedef basic_string<Tchar> tstring;
 #include "NewAllocator.h"
 
 #define DocView
-
+extern const int StoreVer;

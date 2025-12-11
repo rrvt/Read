@@ -6,213 +6,20 @@
 #include "ABookIO.h"
 #include "Books.h"
 #include "NotePad.h"
+#include "PersonDlg.h"
 #include "qsort.h"
-
-#include "Read.h"
-
-
-
-
-void Persons::clear() {
-int i;
-
-  for (i = 0; i < noRcds(); i++) rcds[i].clear();
-  rcds.clear(); nextIndex = 1;
-  }
-
-
-
-Person* Persons::add(PerTyp perTyp, TCchar* fName, TCchar* lName) {
-Person& r = rcds[noRcds()];
-
-  r.perTyp = perTyp; r.fName = fName; r.lName = lName; r.add(nextIndex);  return &r;
-  }
-
-
-
-
-Person* Persons::find(PerTyp perTyp, TCchar* fName, TCchar* lName) {
-int i;
-
-  for (i = 0; i < noRcds(); i++) {
-    Person& r = rcds[i];
-
-    if (r.perTyp == perTyp && r.fName == fName && r.lName == lName) return &r;
-    }
-  return 0;
-  }
-
-
-Person*  Persons::find(PerTyp perTyp, int id) {
-int i;
-
-  if (!id) return 0;
-
-  for (i = 0; i < noRcds(); i++) {
-    Person& r = rcds[i];
-
-    if (r.perTyp == perTyp && r.id == id) return &r;
-    }
-
-  return 0;
-  }
-
-
-void Persons::sort() {
-PersIter iter(*this);
-Person*  author;
-
-  if (noRcds()) qsort(&rcds[0], &rcds[noRcds()-1]);
-
-  for (author = iter(); author; author = iter++) author->bookKeys.sort();
-  }
-
-
-void Persons::display() {
-int i;
-
-  notePad << _T("Persons") << nCrlf << nCrlf;
-  notePad << nSetRTab(3) << nSetTab(5);
-
-  for (i = 0; i < noRcds(); i++) {Person& r = rcds[i];   if (!r.bookKeys.isEmpty()) r.display();}
-  }
-
-
-
-bool Persons::display(int id) {
-int i;
-
-  if (!id) return false;
-
-  for (i = 0; i < noRcds(); i++) {
-    Person& r = rcds[i];
-
-    if (r.bookKeys.isEmpty()) continue;
-
-    if (r.id == id) {notePad << nTab; r.dspName(); return true;}
-    }
-
-  return false;
-  }
-
-
-
-void Persons::display(PerTyp typ, CString tgt) {
-int  i;
-bool lineBrk = false;
-
-  for (i = 0; i < noRcds(); i++) {
-    Person& p = rcds[i];
-
-    if (p.perTyp != typ || p.bookKeys.isEmpty()) continue;
-
-    if (lineBrk) notePad << nCrlf;   lineBrk = true;
-
-    if (p.lName == tgt) {p.display();}
-    }
-  }
-
-
-void Person::display() {
-
-  notePad << nClrTabs << nSetRTab(3) << nSetTab(5) << nSetTab(12);
-
-  notePad << nTab << id << nTab;  dspName();  notePad << nCrlf;
-
-  notePad << nClrTabs << nSetTab(7);
-
-  bookKeys.display(id);
-  }
-
-
-void Person::dspName() {
-
-  switch (perTyp) {
-    case AuthorTyp:
-    case Author :
-    case Author2: notePad << _T("Author:     "); break;
-    case ProtagTyp:
-    case Protag :
-    case Protag2: notePad << _T("Protagonist:"); break;
-    }
-  notePad << nTab << fName << _T(" ") << lName;
-  }
-
-
-
-void Persons::expunge() {
-int i;
-
-  for (i = 0; i < noRcds(); i++) {
-    Person& p = rcds[i];
-
-    if (p.bookKeys.isEmpty()) {rcds.del(i); i--;}
-    }
-  }
-
-
-void Persons::load(Archive& ar) {
-int n;
-int i;
-int x;
-
-  clear();   ar.readBin(n);    if (!n) return;
-
-  for (i = 0; i < n; i++) {
-    x = rcds[noRcds()].load(ar);
-    if (x > nextIndex) nextIndex = x;
-    }
-
-  nextIndex++;
-  }
+#include "RegExpr.h"
+#include "Resource.h"
+#include "Utilities.h"
 
 
 void Persons::store(Archive& ar) {
-int     i;
+PersIter iter(*this);
+Person*  r;
 
-  ar.wrtBin(noRcds());
+  ar.wrtBin(nData());
 
-  for (i = 0; i < noRcds(); i++) {
-    if (!rcds[i].bookKeys.isEmpty()) rcds[i].store(ar);
-    }
-  }
-
-
-
-void Persons::del(Person& person) {
-int i;
-int n = noRcds();
-int personID = person.id;
-
-  person.removeRefs();
-
-  for (i = 0; i < n; i++) if (rcds[i].id == personID) {rcds.del(i); return;}
-  }
-
-
-
-void Persons::removeBookRef(int personID, int bookID) {
-int i;
-int n = noRcds();
-
-  if (!personID) return;
-
-  for (i = 0; i < n; i++) {
-    Person& person = rcds[i];
-    if (person.id == personID) {person.removeBookRef(bookID); return;}
-    }
-  }
-
-
-int Person::load(Archive& ar) {
-ABookIO aBkIO(ar);
-
-  aBkIO.read(id);
-  aBkIO.read(perTyp);
-  aBkIO.read(fName);
-  aBkIO.read(lName);
-
-  bookKeys.load(ar);   return id;
+  for (r = iter(); r; r = iter++) r->store(ar);
   }
 
 
@@ -220,13 +27,301 @@ void Person::store(Archive& ar) {
 ABookIO aBkIO(ar);
 
   aBkIO.write(id);
-  aBkIO.write(perTyp);
+  aBkIO.write(Byte(perTyp));
   aBkIO.write(fName);
   aBkIO.write(lName);
 
-//  aBkIO.flush();
-
   bookKeys.store(ar);
+  }
+
+
+void Persons::load(Archive& ar) {
+int     n;
+int     i;
+Person* r;
+int     x;
+
+  clear();   ar.readBin(n);    if (!n) return;
+
+  for (i = 0; i < n; i++) {
+
+    r = data.allocate();   x = r->load(dbVer, ar);   data = r;
+
+    if (x > nextIndex) nextIndex = x;
+    }
+
+  nextIndex++;
+  }
+
+
+int Person::load(int dbVer, Archive& ar) {
+ABookIO aBkIO(ar);
+Byte    byte;
+
+  aBkIO.read(id);
+  aBkIO.read(byte); perTyp = (PerTyp) (byte >= 5 ? byte - 4 : byte);
+  aBkIO.read(fName);
+  aBkIO.read(lName);
+
+  setKey();
+
+  bookKeys.setVersion(dbVer);   bookKeys.load(ar);   return id;
+  }
+
+
+Person* Persons::add(PerTyp perTyp, TCchar* fName, TCchar* lName) {
+Person* person;
+
+  person = find(perTyp, fName, lName);   if (person) return person;
+
+  person = data.allocate();
+  person->set(nextIndex);   person->add(perTyp, fName, lName);   data = person;   return person;
+  }
+
+
+Person*  Person::add(PerTyp pTyp, TCchar* firstName, TCchar* lastName) {
+  perTyp = pTyp;
+  fName  = firstName;
+  lName  = lastName;
+  setKey();   return this;
+  }
+
+
+bool Person::editRcd() {
+PersonDlg dlg;
+bool      dirty = false;
+
+  dlg.firstName = fName;
+  dlg.lastName  = lName;
+
+  if (dlg.DoModal() == IDOK) {
+    dirty = fName != dlg.firstName;
+    dirty = lName != dlg.lastName;
+
+    fName = dlg.firstName;
+    lName = dlg.lastName;
+    }
+
+  return dirty;
+  }
+
+
+bool Persons::delRecord(Person* person) {             // PerDel
+PersIter iter(*this);
+Person*  per;
+
+  for (per = iter(); per; per = iter++) if (per == person) {
+
+    per->removeRefs(person->id);
+
+    iter.remove();   return true;
+    }
+
+  return false;
+  }
+
+
+Person* Persons::find(PerTyp perTyp, TCchar* fName, TCchar* lName) {
+PersIter iter(*this);
+Person*  r;
+
+  for (r = iter(); r; r = iter++)
+                       if (r->perTyp == perTyp && r->fName == fName && r->lName == lName) return r;
+  return 0;
+  }
+
+
+Person* Persons::find(int id) {
+PersIter iter(*this);
+Person*  r;
+
+  if (!id) return 0;
+
+  for (r = iter(); r; r = iter++) if (r->id == id) return r;
+
+  return 0;
+  }
+
+
+void Persons::sort() {
+PersIter iter(*this);
+Person*  r;
+
+  if (nData()) qsort(&data[0], &data[nData()-1]);
+
+  for (r = iter(); r; r = iter++) r->bookKeys.sort();
+  }
+
+
+bool Persons::mergeDuplicates() {
+PersIter iter(*this);
+Person*  perI;
+PersIter iterJ(*this);
+Person*  perJ;
+bool     dirty = false;
+
+  for (perI = iter(); perI; perI = iter++) {
+
+    for (iterJ = iter, perJ = iterJ++; perJ; perJ = iterJ++) {
+
+      if (perI->perTyp == perJ->perTyp &&
+          perI->fName  == perJ->fName  &&
+          perI->lName  == perJ->lName)
+                             {perI->bookKeys += perJ->bookKeys;   iterJ.remove();   dirty |= true;}
+      }
+    }
+
+  return dirty;
+  }
+
+
+void Persons::display(DspOptions opt) {
+  switch (opt) {
+    case NilDsp   :
+    case TitleDsp :
+    case DateDsp  :
+    case AuthDsp  :
+    case DebugDsp : dbgDsp(); break;
+    }
+  }
+
+
+void Persons::display() {
+PersIter iter(*this);
+Person*  r;
+
+  notePad << _T("Persons") << nCrlf << nCrlf;
+  notePad << nSetRTab(3) << nSetTab(5);
+
+  for (r = iter(); r; r = iter++) r->display();
+  }
+
+
+bool Persons::display(int id) {
+PersIter iter(*this);
+Person*  r;
+
+  if (!id) return false;
+
+  for (r = iter(); r; r = iter++) {
+
+    if (r->id == id) {notePad << nTab; r->dspName(); return true;}
+    }
+
+  return false;
+  }
+
+
+void Persons::display(PerTyp typ, Cstring& tgt) {
+String   t = _T(".*") +  tgt + _T(".*");
+RegExpr  re(t);
+PersIter iter(*this);
+Person*  r;
+bool     lineBrk = false;
+
+  for (r = iter(); r; r = iter++) {
+
+    if (r->perTyp != typ) continue;
+
+    if (re.match(r->getFLname())) {if (lineBrk) notePad << nCrlf;  r->display();  lineBrk = true;}
+    }
+  }
+
+
+void Person::display() {
+int tabs[] = {1, 9, 0};
+  setTabs(-3, tabs);
+
+  notePad << nTab << id << nTab;  dspName();  notePad << nCrlf;
+
+  bookKeys.display(id);
+  }
+
+
+void Persons::dbgDsp() {
+PersIter iter(*this);
+Person*  per;
+bool     isProtag = false;
+
+  notePad << _T("People") << nCrlf << nCrlf;                // in Sorted Order
+
+  for (per = iter(); per; per = iter++) {
+    if (!isProtag && per->perTyp == ProtagTyp) {notePad << nCrlf;   isProtag = true;}
+
+    per->dbgDsp();
+    }
+  }
+
+
+void Person::dbgDsp() {
+String s = perTyp == AuthorTyp ? _T("Author") : _T("Protag");
+
+  notePad << nClrTabs << nSetRTab(3) << nSetTab(4) << nSetTab(13);
+  notePad << nTab << id;
+  notePad << nTab << s;
+  notePad << nTab << fName << _T(' ') << lName;
+  bookKeys.dbgDsp();   notePad << nCrlf;
+  }
+
+
+void Person::dspName() {
+
+  switch (perTyp) {
+    case AuthorTyp: notePad << _T("Author:  "); break;
+    case ProtagTyp: notePad << _T("Protagonist:  "); break;
+    }
+  notePad << getFLname();
+  }
+
+
+void Persons::loadCbx(PerTyp typ, CComboBox& cbx) {
+PersIter iter(*this);
+Person*  per;
+int      x;
+
+  for (per = iter(); per; per = iter++)
+       if (per->perTyp == typ) {x = cbx.AddString(per->getLFname());   cbx.SetItemDataPtr(x, per);}
+  }
+
+
+String Person::getFLname() {
+String s;
+
+  s = lName;   s.trim();   fName.trim();
+
+  if (!fName.isEmpty()) {if (!s.isEmpty()) s = fName + _T(" ") + s;}
+
+  return s;
+  }
+
+
+String Person::getLFname() {
+String s;
+
+  s = lName;   s.trim();   fName.trim();
+
+  if (!fName.isEmpty()) {if (!s.isEmpty()) s += _T(", ");   s += fName;}
+
+  return s;
+  }
+
+
+TCchar* Person::getPerType() {
+  switch (perTyp) {
+    case AuthorTyp: return _T("Author");
+    case ProtagTyp: return _T("Protagonist");
+    case NilTyp   :
+    default       : return _T("NilTyp");
+    }
+  }
+
+
+
+void Persons::del(int personID) {
+PersIter iter(*this);
+Person*  r;
+
+  for (r = iter(); r; r = iter++) if (r->id == personID) {iter.remove(); return;}
   }
 
 
@@ -235,184 +330,119 @@ void Person::clear() {bookKeys.clear(); fName.clear(); lName.clear();}
 
 void Person::copy(Person& a) {
 
-  rcdCopy(a);  perTyp = a.perTyp;   fName = a.fName;   lName = a.lName;
+  Record::copy(a);  perTyp = a.perTyp;   fName = a.fName;   lName = a.lName;
 
   bookKeys = a.bookKeys;
   }
 
 
-bool Person::operator== (Person& a)
-                              {return perTyp == a.perTyp && fName == a.fName &&  lName == a.lName;}
 
+//////--------------
+#if 0
+bool Person::operator== (Person& a)
+                              {return key == a.key;}
 
 bool Person::operator>  (Person& a) {
   return  perTyp >  a.perTyp || perTyp == a.perTyp &&
          (lName  >  a.lName  || (lName == a.lName  && fName >  a.fName));
   }
-
-
-bool Person::operator<= (Person& a) {
-  return perTyp <  a.perTyp || perTyp == a.perTyp &&
-        (lName  <  a.lName  || (lName == a.lName  && fName <= a.fName));
-  }
-
-
-void BookKeys::clear() {
+auto Person::operator<=> (Person& a) {return key <=> a.key;}
+#endif
+//  aBkIO.flush();
+//#include "Read.h"
+#if 0
+void Persons::clear() {
 int i;
 
   for (i = 0; i < noRcds(); i++) rcds[i].clear();
-
-  rcds.clear();
+  rcds.clear(); nextIndex = 1;
   }
+#endif
+#if 0
+Person*  Persons::find(PerTyp perTyp, int id) {
+PersIter iter(*this);
+Person*  r;
 
+  if (!id) return 0;
 
-void BookKeys::addRef(int bookID, String& title) {
-int i;
-
-  for (i = 0; i < noRcds(); i++) if (rcds[i].bookID == bookID) {rcds[i].title = title; return;}
-
-  BookKey& bookKey = rcds[noRcds()];
-
-  bookKey.bookID = bookID;   bookKey.title = title;
-  }
-
-
-void BookKeys::delRef(int bookID) {
-int i;
-
-  for (i = 0; i < noRcds(); i++) {
-    BookKey& bookKey = rcds[i];
-    if (bookKey.bookID == bookID) {bookKey.title.clear();   rcds.del(i); break;}
-    }
-  }
-
-
-BookKey* BookKeys::find(  int bookID, String& title) {
-int i;
-
-  for (i = 0; i < noRcds(); i++) {
-    BookKey& bookKey = rcds[i];
-    if (bookKey.bookID == bookID && bookKey.title == title) return &bookKey;
-    }
+  for (r = iter(); r; r = iter++) if (r->perTyp == perTyp && r->id == id) return r;
 
   return 0;
   }
-
-
-void BookKeys::sort() {
-  if (noRcds()) qsort(&rcds[0], &rcds[noRcds()-1]);
-  }
-
-
-void BookKeys::updateRefs() {
-int i;
-
-  for (i = 0; i < noRcds(); i++) {
-    BookKey& bookKey = rcds[i];
-
-    Book* book = books.find(bookKey.bookID);
-
-    if (book) bookKey.title = book->title;
-    else     {rcds.del(i); i--;}
-    }
-  }
-
-
-
-void BookKeys::removeRefs(int personID) {
-int i;
-int n = noRcds();
-
-  for (i = 0; i < n; i++) books.removeRef(rcds[i].bookID, personID);
-  }
-
-
-void BookKeys::removeBookRef(int bookID) {
-int i;
-
-  for (i = 0; i < noRcds(); i++)
-            {BookKey& bookKey = rcds[i];   if (bookKey.bookID == bookID) {rcds.del(i); i--;}}
-  }
-
-
-bool BookKeys::removeDuplicates() {
-int  i;
-int  j;
-bool dirty = false;
-
-  for (i = 0; i < noRcds()-1; i++) {
-    BookKey& bookKey = rcds[i];
-
-    for (j = i+1; j < noRcds(); j++) {
-      BookKey& b = rcds[j];
-
-      if (bookKey.bookID == b.bookID)
-        {rcds.del(j); j--; dirty = true;}
+#endif
+#if 0
+    if (x == IDC_EditPerson) {
+      person->fName = fName; person->lName = lName;
       }
-    }
-
-  return dirty;
-  }
-
-
-bool BookKeys::verifyRefs(RecordID personID) {
-int  i;
-bool dirty = false;
-
-  for (i = 0; i < noRcds(); i++) {
-
-    Book* book = books.find(rcds[i].bookID);
-
-    if (book) {
-      if (book->authorID  == personID) continue;
-      if (book->author2ID == personID) continue;
-      if (book->protagID  == personID) continue;
-      if (book->protag2ID == personID) continue;
+    else if (x == IDC_DeleteRef) {
+      person->bookKeys.delRef(book->id);
+      person = persons.add(perTyp, fName, lName);
       }
+#endif
+//#include "EditOrDelRefDlg.h"
+#if 1
+#else
+  person->set(nextIndex);
+  person->perTyp = perTyp;
+  person->fName  = fName;
+  person->lName  = lName;
+  setKey();   data = person;   return person;
+#endif
+#if 1
+#else
+  notePad << nClrTabs << nSetRTab(3) << nSetTab(4) << nSetTab(12);
+#endif
+#if 0
+Person* Persons::update(PerTyp perTyp, int perID, TCchar* fName, TCchar* lName) {
+#if 1
+  return 0;
+#else
+Person*         person;
+EditOrDelRefDlg edlg;
 
-    rcds.del(i); i--; dirty = true;
+  person = find(perID);
+  if (person) {
+    if (person->fName == fName && person->lName == lName) return person;
+
+    edlg.person = person->fName + _T(" ") + person->lName;
+
+    int x = edlg.DoModal();
+
+    return person;
     }
 
-  return dirty;
+  return add(perTyp, fName, lName);
+#endif
   }
+#endif
+//    if (r->bookKeys.isEmpty()) continue;
+#if 0
+void Persons::resolveIDs(Archive& ar) {
+PersIter iter(*this);
+Person*  r;
 
-
-
-void BookKeys::display(int id) {
-int   i;
-Book* book;
-bool  lineBrk = false;
-
-  for (i = 0; i < noRcds(); i++) {
-    BookKey& bookKey = rcds[i];
-
-    book = books.find(bookKey.bookID);    if (!book) continue;
-
-    if (lineBrk) notePad << nCrlf;   lineBrk = true;
-
-    book->display(id);
-    }
+  for (r = iter(); r; r = iter++) r->bookKeys.resolveIDs(ar);
   }
+#endif
+//void Persons::del(Person& person) {person.removeRefs();   del(person.id);}
+#if 0
+void Persons::removeBookRef(int personID, Book* book) {
+PersIter iter(*this);
+Person*  r;
 
+  if (!personID) return;
 
-void  BookKeys::load(Archive& ar) {
-ABookIO aBkIO(ar);
-int     i;
-int     n;
-
-  rcds.clear();  aBkIO.read(n);
-
-  for (i = 0; i < n; i++) aBkIO.read(rcds[i].bookID);
+  for (r = iter(); r; r = iter++) if (r->id == personID) {r->removeBookRef(book); return;}
   }
+#endif
+#if 0
+void Persons::expunge() {
+PersIter iter(*this);
+Person*  r;
 
-
-void BookKeys::store(Archive& ar) {
-ABookIO aBkIO(ar);
-int     i;
-
-  aBkIO.write(noRcds());
-
-  for (i = 0; i < noRcds(); i++) aBkIO.write(rcds[i].bookID);
+  for (r = iter(); r; r = iter++) if (r->bookKeys.isEmpty()) iter.remove();
   }
+#endif
+
 
 

@@ -49,6 +49,6 @@ void SearchDlg::OnOK() {
 
   CDialogEx::OnOK();
 
-  iniFile.writeInt(  Section,  Key,    srchType);
+  iniFile.writeInt(   Section, Key,    srchType);
   iniFile.writeString(Section, TgtKey, target);
   }

@@ -45,6 +45,7 @@
     <ClCompile Include="Note.cpp" />
     <ClCompile Include="NoteNmbr.cpp" />
     <ClCompile Include="NoteUndrLn.cpp" />
+    <ClCompile Include="PathDlgDsc.cpp" />
     <ClCompile Include="RegExpr.cpp" />
     <ClCompile Include="StatusBar.cpp" />
     <ClCompile Include="Tabs.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="NoteNmbr.h" />
     <ClInclude Include="NoteTab.h" />
     <ClInclude Include="NoteUndrLn.h" />
+    <ClInclude Include="PathDlgDsc.h" />
     <ClInclude Include="RegExpr.h" />
     <ClInclude Include="SendMsg.h" />
     <ClInclude Include="StatusBar.h" />

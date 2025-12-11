@@ -45,25 +45,10 @@
     <ClInclude Include="SearchDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ABookDlg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ABookIO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Books.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DeleteDlg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DeleteMsgDlg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EditDlg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EditOrDelRefDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Library\Extras\AboutDlg.h">
@@ -82,6 +67,30 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MyToolBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BookKeys.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BkIdP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PerKeys.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PerIdP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PersonDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BookDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChooseDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -107,25 +116,10 @@
     <ClCompile Include="SearchDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ABookDlg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ABookIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Books.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DeleteDlg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DeleteMsgDlg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EditDlg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EditOrDelRefDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Library\Extras\AboutDlg.cpp">
@@ -138,6 +132,30 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MyToolBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BookKeys.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BkIdP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PerKeys.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PerIdP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PersonDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BookDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChooseDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -165,9 +183,13 @@
     <None Include="..\..\Library\Extras\RptOrientOne.rc2">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\Data\NewBookDB.bdb" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Read.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Toolbar01.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

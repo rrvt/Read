@@ -33,7 +33,7 @@ TBEditBox editBox;
 
 #ifdef DocViewTB
 
-TBMenu    menu1;
+//TBMenu    menu1;
 
 #else
 
@@ -56,6 +56,7 @@ TBCboBx   cboBx1;
 #endif
 
 TBMenu    menu;
+TBMenu    menu2;
 
 
 public:

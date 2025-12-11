@@ -142,17 +142,19 @@
   <ItemGroup>
     <ClInclude Include="..\..\Library\Extras\AboutDlg.h" />
     <ClInclude Include="..\..\Library\Extras\OptionsDlg.h" />
-    <ClInclude Include="ABookDlg.h" />
     <ClInclude Include="ABookIO.h" />
+    <ClInclude Include="BkIdP.h" />
+    <ClInclude Include="BookDlg.h" />
+    <ClInclude Include="BookKeys.h" />
     <ClInclude Include="Books.h" />
-    <ClInclude Include="DeleteDlg.h" />
-    <ClInclude Include="DeleteMsgDlg.h" />
-    <ClInclude Include="EditDlg.h" />
-    <ClInclude Include="EditOrDelRefDlg.h" />
+    <ClInclude Include="ChooseDlg.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="MyToolBar.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PerIdP.h" />
+    <ClInclude Include="PerKeys.h" />
+    <ClInclude Include="PersonDlg.h" />
     <ClInclude Include="Persons.h" />
     <ClInclude Include="Read.h" />
     <ClInclude Include="ReadDoc.h" />
@@ -163,32 +165,37 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="..\..\Library\Extras\ResourceExtra.h" />
     <ClInclude Include="..\..\Library\Extras\RptOrientDlgOne.h" />
+    <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Library\Extras\AboutDlg.cpp" />
     <ClCompile Include="..\..\Library\Extras\OptionsDlg.cpp" />
-    <ClCompile Include="ABookDlg.cpp" />
     <ClCompile Include="ABookIO.cpp" />
+    <ClCompile Include="BkIdP.cpp" />
+    <ClCompile Include="BookDlg.cpp" />
+    <ClCompile Include="BookKeys.cpp" />
     <ClCompile Include="Books.cpp" />
-    <ClCompile Include="DeleteDlg.cpp" />
-    <ClCompile Include="DeleteMsgDlg.cpp" />
-    <ClCompile Include="EditDlg.cpp" />
-    <ClCompile Include="EditOrDelRefDlg.cpp" />
+    <ClCompile Include="ChooseDlg.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="MyToolBar.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="PerIdP.cpp" />
+    <ClCompile Include="PerKeys.cpp" />
+    <ClCompile Include="PersonDlg.cpp" />
     <ClCompile Include="Persons.cpp" />
     <ClCompile Include="Read.cpp" />
     <ClCompile Include="ReadDoc.cpp" />
     <ClCompile Include="ReadView.cpp" />
     <ClCompile Include="SearchDlg.cpp" />
     <ClCompile Include="..\..\Library\Extras\RptOrientDlgOne.cpp" />
+    <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Read.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Library\Extras\AboutDlg.rc2" />
+    <None Include="..\Data\NewBookDB.bdb" />
     <None Include="res\Read.rc2" />
     <None Include="..\..\Library\Extras\Options.rc2" />
     <None Include="..\README.md" />
@@ -199,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Read.ico" />
+    <Image Include="res\Toolbar01.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Library\DocView\DocView.vcxproj">

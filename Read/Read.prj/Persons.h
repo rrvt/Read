@@ -2,104 +2,26 @@
 
 #pragma once
 #include "Archive.h"
-#include "Expandable.h"
+#include "BookKeys.h"
+#include "ExpandableP.h"
 #include "IterT.h"
 #include "Record.h"
 
 
 
-enum PerTypPos {NilTypPos, Author, Author2, Protag, Protag2, BaseTyp};
-enum PerTyp    {AuthorTyp = BaseTyp, ProtagTyp};
-
-
-class BookKey {
-public:
-String title;
-int    bookID;
-
-  BookKey() : bookID(0) {title.clear();}
- ~BookKey()             {clear();}
-
-  void clear() {title.clear(); bookID = 0;}
-
-  BookKey(BookKey& b) {copy(b);}
-  BookKey& operator= (BookKey& b) {copy(b); return *this;}
-
- //  *p == *q
- //  *p >  *q
- //  *p <= *q
-
-  bool    operator== (BookKey& b) {return title == b.title;}
-  bool    operator>  (BookKey& b) {return title >  b.title ;}
-  bool    operator<= (BookKey& b) {return title <  b.title;}
-
-private:
-
-  void copy(BookKey& b) {title = b.title; bookID = b.bookID;}
-  };
-
-
-class BookKeys;
-typedef IterT<BookKeys, BookKey> BksIter;
-
-
-class BookKeys {
-Expandable<BookKey, 1> rcds;
-
-public:
-
-  BookKeys() {}
-  BookKeys(BookKeys& bk) {copy(bk);}
- ~BookKeys() {clear();}
-
-  BookKeys& operator= (BookKeys& bk) {copy(bk); return *this;}
-
-  void clear();
-
-  BookKey* find(  int bookID, String& title);
-  void     addRef(int bookID, String& title);
-  void     delRef(int bookID);
-  bool     isEmpty() {return !noRcds();}
-
-  void     sort();
-
-  void     updateRefs();
-
-  void     removeRefs(   int personID);
-  void     removeBookRef(int bookID);
-
-  bool     removeDuplicates();
-  bool     verifyRefs(RecordID personID);
-
-  void     load(Archive& ar);
-  void     store(Archive& ar);
-
-  void     display(int index);
-
-private:
-
-  int  noRcds() {return rcds.end();}
-  void copy(BookKeys& bk) {rcds = bk.rcds;}
-
-  // returns either a pointer to data (or datum) at index i in array or zero
-
-  BookKey* datum(int i) {return 0 <= i && i < nData() ? &rcds[i] : 0;}       // or data[i].p
-
-  int   nData()      {return rcds.end();}                 // returns number of data items in array
-
-  friend typename BksIter;
-  };
+enum PerTypPos {NilPos, AuthorPos, Author2Pos, ProtagPos, Protag2Pos};
+enum PerTyp    {NilTyp, AuthorTyp, ProtagTyp};
 
 
 class Person : public Record {
 public:
 
-Byte     perTyp;
+PerTyp   perTyp{NilTyp};
 String   fName;
 String   lName;
 BookKeys bookKeys;
 
-  Person() : perTyp(NilTypPos) {}
+  Person() { }
  ~Person() {clear();}
 
   void clear();
@@ -112,84 +34,120 @@ BookKeys bookKeys;
   //  *p >  *q
   //  *p <= *q
 
-  bool    operator== (Person& a);
-  bool    operator>  (Person& a);
-  bool    operator<= (Person& a);
+  bool    operator== (Person& a)  {return key ==  a.key;}
+  auto    operator<=>(Person& a)  {return key <=> a.key;}
 
-  int      load( Archive& ar);
+  int      load(int dbVer, Archive& ar);
   void     store(Archive& ar);
+
+  Person*  add(PerTyp pTyp, TCchar* firstName, TCchar* lastName);
+  bool     editRcd();
 
   void     sort();
 
-  void     updateRefs()              {bookKeys.updateRefs();}
+  void     removeRefs()             {bookKeys.removeRefs(id);}
+  void     removeRefs(int personID) {return bookKeys.removeRefs(personID);} // PerDel
 
-  void     removeRefs()              {bookKeys.removeRefs(id);}
-  void     removeBookRef(int bookID) {bookKeys.removeBookRef(bookID);}
+  bool     removeRef(int bookID) {return bookKeys.removeRef(bookID);}       //BkDel
+                                                                 // returns true if bookKeys empty
 
-  bool     removeDuplicates()        {return bookKeys.removeDuplicates();}
-  bool     verifyRefs()              {return bookKeys.verifyRefs(id);}
+  bool     removeDuplicates() {return bookKeys.removeDuplicates();}
+  bool     verifyRefs()       {return bookKeys.verifyRefs(id);}
 
   void     display();
   void     dspName();
 
+  String   getFLname();
+  String   getLFname();
+  TCchar*  getPerType();
+
+  void     dbgDsp();
+
 private:
 
-  void copy(Person& a);
+  void     setKey() {key = perTyp;   key += lName + fName;}
+
+  void     copy(Person& a);
   };
 
 
 class Persons;
-typedef IterT<Persons, Person> PersIter;
+typedef DatumPtrT<Person, String> PersonP;
+typedef IterT<Persons, Person>    PersIter;
 
 
 class Persons {
-//int                   x;
-int                   nextIndex;
-Expandable<Person, 1> rcds;
+int                                     dbVer{};
+int                                     nextIndex;
+ExpandableP<Person, String, PersonP, 2> data;
 
 public:
 
   Persons() : nextIndex(1) {}
 
-  void     clear();
+  void     setVersion(int ver) {dbVer = ver;}
 
-  Person*  add( PerTyp perTyp, TCchar* fName, TCchar* lName);
-  Person*  find(PerTyp perTyp, TCchar* fName, TCchar* lName);
-  Person*  find(PerTyp perTyp, int id);
-
-  int      number() {return noRcds();}
-
-  void     sort();
-
-  void     del(Person& person);
-  void     removeBookRef(int personID, int bookID);
-
-  void     expunge();
+  void     clear() {data.clear();   nextIndex = 1;}
 
   void     load(Archive& ar);
   void     store(Archive& ar);
 
+  Person*  add( PerTyp perTyp, TCchar* fName, TCchar* lName);
+  Person*  find(PerTyp perTyp, TCchar* fName, TCchar* lName);
+  Person*  find(int id);
+
+  void     sort();
+
+  bool     delRecord(Person* person);               // PerDel
+
+  void     del(int personID);
+
+  bool     mergeDuplicates();                       // FixIt
+
+  void     display(DspOptions opt);
   void     display();
   bool     display(int id);
-  void     display(PerTyp typ, CString tgt);
+  void     display(PerTyp typ, Cstring& tgt);
+  void     dbgDsp();
 
-//  Person*  startLoop() {x = -1; return nextNode();}
-//  Person*  nextNode()  {return ++x < noRcds() ? &rcds[x] : 0;}
-
-//  void examinePersons();
+  void     loadCbx(PerTyp typ, CComboBox& cbx);
 
 private:
 
-  int noRcds() {return rcds.end();}
-
   // returns either a pointer to data (or datum) at index i in array or zero
 
-  Person* datum(int i) {return 0 <= i && i < nData() ? &rcds[i] : 0;}       // or data[i].p
+  Person* datum(int i) {return 0 <= i && i < nData() ? data[i] : 0;}
 
-  int   nData()      {return rcds.end();}                 // returns number of data items in array
+  int     nData()      {return data.end();}               // returns number of data items in array
+                                                          // not necessarily private
+  void    removeDatum(int i) {if (0 <= i && i < nData()) data.del(i);}
 
   friend typename PersIter;
   };
 
 
 extern Persons persons;
+
+
+
+
+
+/////////-----------------
+//  Person*  find(PerTyp perTyp, int id);
+//  bool    operator>  (Person& a);
+
+//  Person*  startLoop() {x = -1; return nextNode();}
+//  Person*  nextNode()  {return ++x < noRcds() ? &rcds[x] : 0;}
+
+//  void examinePersons();
+
+//  void     updateRefs()              {bookKeys.updateRefs();}
+
+//  int      number() {return noRcds();}
+//  void     resolveIDs(Archive& ar);
+//  void     del(Person& person);
+//  Person*  update(PerTyp perTyp, int perID, TCchar* fName, TCchar* lName);
+//  void     removeBookRef(int personID, Book* book);
+//  void     expunge();
+
+

@@ -36,6 +36,10 @@ Execute the msi file to install the app.
 
 ## Updates
 
+### Update 12/11/25
+
+Added read date to book.  Changed some of the commands.  Change a little of the database format.
+
 ### Update 10/21/25
 
 Factored library into three parts, Library, Dialog, DocView.
